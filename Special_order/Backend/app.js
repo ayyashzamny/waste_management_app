@@ -1,5 +1,6 @@
 const express=require("express");
 const mongoose=require("mongoose");
+const specialorderrouter=require("./Routes/Specialorderroutes");
 
 const app=express();
 const cors=require("cors");
@@ -7,7 +8,9 @@ const cors=require("cors");
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://Mohamedarshad:arshad123@atlascluster.d1qd0xc.mongodb.net/notes_db?retryWrites=true&w=majority&appName=AtlasCluster")
+app.use("/orders",specialorderrouter);
+
+mongoose.connect("mongodb+srv://Mohamedarshad:arshad123@atlascluster.d1qd0xc.mongodb.net/waste_management?retryWrites=true&w=majority&appName=AtlasCluster")
 .then(()=>console.log("connected to mongodb"))
 .then(()=> {
     app.listen(5000);

@@ -20,7 +20,7 @@ const getAllOrders=async(req,res,next)=>
         //display all notes
         return res.status(200).json({Orders});
     };
-    //http://localhost:5000/notes=>testing above get method using this url in the postman
+    //http://localhost:5000/orders=>testing above get method using this url in the postman
     
 //inserting notes
 const addOrders=async(req,res,next)=>{
@@ -42,7 +42,7 @@ const addOrders=async(req,res,next)=>{
     return res.status(200).json({orders});
 
 }
-//http://localhost:5000/notes=>testing above post method using this url in the postman
+//http://localhost:5000/orders=>testing above post method using this url in the postman
 
 //get by ID
 const getById=async(req,res,next)=>{
@@ -51,7 +51,7 @@ const getById=async(req,res,next)=>{
     let order;
 
     try{
-        order=await Note.findById(id);
+        order=await Order.findById(id);
     }catch(err){
         console.log(err);
     }
@@ -62,7 +62,7 @@ const getById=async(req,res,next)=>{
     return res.status(200).json({order});
 
 }
-//http://localhost:5000/notes/id=>testing above get method using this url in the postman
+//http://localhost:5000/orders/id=>testing above get method using this url in the postman
 
 //update note details
 const updateOrder=async(req,res,next)=>{
@@ -85,7 +85,7 @@ const updateOrder=async(req,res,next)=>{
     return res.status(200).json({orders});
 
 }
-//http://localhost:5000/notes/update/id
+//http://localhost:5000/orders/update/id=>test this using put method
 
 //delete user details
 const deleteOrder=async(req,res,next)=>{
@@ -103,6 +103,7 @@ const deleteOrder=async(req,res,next)=>{
     }
     return res.status(200).json({order});
 }
+//http://localhost:5000/orders/delete/id=>test this using delete method
 
 //exporting all functions
 exports.getAllOrders=getAllOrders;
