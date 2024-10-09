@@ -31,7 +31,8 @@
     display: flex;
     justify-content: space-between;
     padding: 15px 12%;
-    height: 80px
+    height: 80px;
+    background-color:#38983c;
   }
   .nav_logo_user {
     width: 75px;
@@ -79,8 +80,9 @@
   .navitem {
     font-size: 25px;
     font-weight: bolder;
-    cursor: pointer;
+    cursor: pointer ;
+    
   }
   .navitem:hover {
-    color: #05043f;
+    color: white;
   }
