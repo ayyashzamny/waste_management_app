@@ -116,8 +116,10 @@ function Updateorder() {
     <label for="InputDescription" class="form-label">Prefered Time</label>
     <input type="text" class="form-control" name="preferedtime" onChange={handleChange} value={inputs.preferedtime} required/>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button type="submit" class="btn btn-primary" onClick={deleteHandler}>Delete</button>
+  <div style={{display:'flex'}}>
+  <button type="submit" class="btn btn-danger" onClick={deleteHandler}>Delete</button>
+  <button type="submit" class="btn btn-success" style={{marginLeft:'550px'}}>Update</button>
+  </div>
 </form>
 </div>
     </div>

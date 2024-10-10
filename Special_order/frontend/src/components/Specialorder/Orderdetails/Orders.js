@@ -3,7 +3,7 @@ import Nav from "../Nav/Nav";
 import axios from "axios";
 import Order from "../Order/Order";
 import {useReactToPrint} from "react-to-print";
-// import './Notes.css';
+import './Orders.css';
 // import bgimg from "./bg3.jpeg";
 // import Notepic from "./notepic.jpg";
 // import Notepic2 from "./notepic2.jpg";
@@ -69,13 +69,14 @@ function Orders() {
        {/* <div className="bgimg"
       style={{ backgroundImage: `url(${bgimg})`, backgroundSize: "cover" ,position:"sticky",WebkitPosition:"sticky", 
       MozPosition:"sticky"}}>  */}
-      <h1 className='hed1'>Order Details Display Page</h1>
+      <h1 className='hed1'>Sheduled Waste Collection</h1>
+      
       <input className="search" onChange={(e) => setSearchQuery(e.target.value)}
              type='text'
              name='search'
-             placeholder='search user details'></input>
+             placeholder='search order details'></input>
 
-       <button className="searchbtn" onClick={handlesearch}>Search</button>
+       <button className="btn btn-success" id='sbtn' onClick={handlesearch}>Search</button>
        {/* <p className='theme1'>Keep your translations organized and enriched with personal insights. This section allows you to delete, edit, and manage notes for each translated text. 
        Simply click on a note to edit or delete it, and use the 'Add New Note' button to expand your collection. Stay organized and make the most out of your bilingual experience with our seamless note management system.
        </p> */}
@@ -86,7 +87,7 @@ function Orders() {
       {/* <div>
       <img src={Notepic2} alt="note_pic" className="notepic2" />
       </div> */}
-     
+     <p className='hed2'>Next Waste Collection</p>
       <div className="notes-container">
       {noResults ?(
           <div>
@@ -106,7 +107,7 @@ function Orders() {
        
        </div>
        )}
-        <button className="btn btn-primary" id='downloadreport' onClick={()=>{
+        <button className="downrep" id='downloadreport' onClick={()=>{
          
            handleprint();
         }}>Download Report</button>

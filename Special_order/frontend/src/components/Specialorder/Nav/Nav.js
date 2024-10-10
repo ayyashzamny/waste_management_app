@@ -32,7 +32,7 @@ function Nav() {
       </div>
       <div className="nav_item_user">
         <h3 className="navitem" onClick={() => (window.location.href = "/")}>Home</h3>
-        <h3 className="navitem" onClick={() => (window.location.href = "/addorder")}>Special Collection Order</h3>
+        <h3 className="navitem" onClick={() => (window.location.href = "/addorder")}>Special Collection</h3>
         <h3 className="navitem" onClick={() => (window.location.href = "/orderdetails")}>Order details</h3>
         <button
           className="nav_btn_log"

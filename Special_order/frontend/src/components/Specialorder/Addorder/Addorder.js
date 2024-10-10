@@ -52,7 +52,7 @@ function Addorder() {
   return (
     <div>
         <Nav/>
-      
+      <div className='' style={{display:'flex',gap:'30px'}}>
        <div className="bg"
       style={{   backgroundColor: 'white',
         backgroundSize: 'cover',
@@ -96,12 +96,16 @@ function Addorder() {
     <label for="InputDescription" class="form-label">Prefered Time</label>
     <input type="text" class="form-control" name="preferedtime" onChange={handleChange} value={inputs.preferedtime} required/>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div className='btngroup' >
+  <button type="submit" class="btn btn-secondary">Cancel</button>
+  <button type="submit" class="btn btn-success" style={{marginLeft:'550px'}}>Save</button>
+  </div>
 </form>
 </div>
 <div className='bin'>
         <img src={Bin} alt="logo_nav" className="binimg" /> 
 </div>
+    </div>
     </div>
   );
 }

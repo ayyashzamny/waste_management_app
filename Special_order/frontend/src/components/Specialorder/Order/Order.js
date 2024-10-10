@@ -49,7 +49,7 @@ function Order(props) {
    
 
 
- <div class="card mb-3" >
+ <div class="card mb-3" id='cards' >
   {/* <img src="..." class="card-img-top" alt="..."> */}
   <div class="card-body" >
     <h5 class="card-title" >Order Display</h5>
@@ -63,7 +63,8 @@ function Order(props) {
       
       <h5>{preferedtime}</h5>
       <button
-          className="nav_btn_log "
+          className="btn btn-success no-print"
+          // id='editbtn'
           onClick={() => (window.location.href = `/orderdetails/${_id}`)}
         >
           Edit
