@@ -41,10 +41,10 @@ const specialorderSchema=new Schema({
         type:Number,
         required:true
     },
-    // status:{
-    //     type:String,
-    //     required:true
-    // }
+    status:{
+        type:String,
+        required:true
+    }
 })
 
 module.exports=mongoose.model(

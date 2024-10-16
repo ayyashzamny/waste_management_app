@@ -17,10 +17,14 @@ function SpecialOrderdis() {
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
-    fetchOrders().then((data) => setOrders(data.Orders || []));
+    fetchOrders().then((data) => {
+      const pendingOrders = data.Orders.filter(order => order.status === "Pending");
+      setOrders(pendingOrders);
+    });
   }, []);
 
   const history = useNavigate();
+
   const deleteHandler = async (_id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this order?"
@@ -28,12 +32,14 @@ function SpecialOrderdis() {
 
     if (confirmed) {
       try {
-        await axios.delete(`${URL}/${_id}`);
-        window.alert("Deleted successfully!");
-        history("/driverdetails");
-        window.location.reload();
+        await axios.put(`${URL}/updateStatus/${_id}`, { status: "Denied" });
+        window.alert("Order denied successfully!");
+        fetchOrders().then((data) => {
+          const pendingOrders = data.Orders.filter(order => order.status === "Pending");
+          setOrders(pendingOrders);
+        });
       } catch (error) {
-        console.error("Error deleting details:", error);
+        console.error("Error denying order:", error);
       }
     }
   };
@@ -41,9 +47,12 @@ function SpecialOrderdis() {
   // Assign Driver Function
   const assignDriverHandler = async (orderId) => {
     try {
-      await axios.post(`${URL}/assign`, { orderId });
+      await axios.put(`${URL}/updateStatus/${orderId}`, { status: "Accepted" });
       window.alert("Driver assigned successfully!");
-      fetchOrders().then((data) => setOrders(data.Orders || []));
+      fetchOrders().then((data) => {
+        const pendingOrders = data.Orders.filter(order => order.status === "Pending");
+        setOrders(pendingOrders);
+      });
     } catch (error) {
       console.error("Error assigning driver:", error);
     }
@@ -51,7 +60,7 @@ function SpecialOrderdis() {
 
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
-    contentRef: componentRef,
+    content: () => componentRef.current,
     documentTitle: "Order Report",
     onAfterPrint: () => alert("Order Report Successfully Downloaded!"),
   });
@@ -59,7 +68,7 @@ function SpecialOrderdis() {
   const handleSearch = () => {
     fetchOrders().then((data) => {
       const filtered = data.Orders.filter((order) =>
-        order.contactname.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        order.contactname.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setOrders(filtered);
       setNoResults(filtered.length === 0);

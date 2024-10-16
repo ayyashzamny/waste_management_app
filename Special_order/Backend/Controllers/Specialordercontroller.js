@@ -1,116 +1,100 @@
-const Order=require('../Models/Specialordermodel');
+const Order = require('../Models/Specialordermodel');
 
-//displaying all order
-const getAllOrders=async(req,res,next)=>
-    {
-        let Orders
-    
-        //get all orders
-        try{
-            Orders=await Order.find();//finding every note and displaying
-        }catch(err){
-            console.log(err);
-        }
-    
-        //not found
-        if(!Orders){
-            return res.Status(404).json({message:"orders not found"});
-        }
-    
-        //display all orders
-        return res.status(200).json({Orders});
-    };
-    //http://localhost:5000/orders=>testing above get method using this url in the postman
-    
-//inserting orders
-const addOrders=async(req,res,next)=>{
-    const{contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
+// Displaying all orders
+const getAllOrders = async (req, res, next) => {
+    let Orders;
+    try {
+        Orders = await Order.find(); // finding every note and displaying
+    } catch (err) {
+        console.log(err);
+    }
+    if (!Orders) {
+        return res.status(404).json({ message: "Orders not found" });
+    }
+    return res.status(200).json({ Orders });
+};
 
+// Inserting orders
+const addOrders = async (req, res, next) => {
+    const { contactname, typeofuser, contactemail, address, listofitems, prefereddate, preferedtime, totalweight, totalamount, status } = req.body;
     let orders;
-   
-    try{
-        orders=new Order({contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount});
-        await orders.save();//save the inserted details in the database
-    }catch(err){
+    try {
+        orders = new Order({ contactname, typeofuser, contactemail, address, listofitems, prefereddate, preferedtime, totalweight, totalamount, status });
+        await orders.save(); // save the inserted details in the database
+    } catch (err) {
         console.log(err);
     }
-
-    //not insert orders
-    if(!orders){
-        return res.status(404).json({message:"unable to add orders"});
+    if (!orders) {
+        return res.status(404).json({ message: "Unable to add orders" });
     }
-    return res.status(200).json({orders});
+    return res.status(200).json({ orders });
+};
 
-}
-//http://localhost:5000/orders=>testing above post method using this url in the postman
-
-//get by ID
-const getById=async(req,res,next)=>{
-    const id=req.params.id;//finding the particular order
-
+// Get by ID
+const getById = async (req, res, next) => {
+    const id = req.params.id;
     let order;
-
-    try{
-        order=await Order.findById(id);
-    }catch(err){
+    try {
+        order = await Order.findById(id);
+    } catch (err) {
         console.log(err);
     }
-    //not available orders
-    if(!order){
-        return res.status(404).json({message:"Order not found"});
+    if (!order) {
+        return res.status(404).json({ message: "Order not found" });
     }
-    return res.status(200).json({order});
+    return res.status(200).json({ order });
+};
 
-}
-//http://localhost:5000/orders/id=>testing above get method using this url in the postman
-
-//update order details
-const updateOrder=async(req,res,next)=>{
-    const id=req.params.id;
-    const {contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
-
+// Update order details
+const updateOrder = async (req, res, next) => {
+    const id = req.params.id;
+    const { contactname, typeofuser, contactemail, address, listofitems, prefereddate, preferedtime, totalweight, totalamount, status } = req.body;
     let orders;
-
-    try{
-        orders=await Order.findByIdAndUpdate(id,{contactname:contactname,typeofuser:typeofuser,contactemail:contactemail,address:address,listofitems:listofitems,prefereddate:prefereddate,preferedtime:preferedtime,totalweight:totalweight,totalamount:totalamount});//finding the particular Order and updating
-        orders=await orders.save();//save the particular updated details
-    }catch(err){
+    try {
+        orders = await Order.findByIdAndUpdate(id, { contactname, typeofuser, contactemail, address, listofitems, prefereddate, preferedtime, totalweight, totalamount, status }, { new: true }); // finding the particular Order and updating
+    } catch (err) {
         console.log(err);
     }
-
-    //not available orders
-    if(!orders){
-        return res.status(404).json({message:"unable to update order details"});
+    if (!orders) {
+        return res.status(404).json({ message: "Unable to update order details" });
     }
-    return res.status(200).json({orders});
+    return res.status(200).json({ orders });
+};
 
-}
-//http://localhost:5000/orders/update/id=>test this using put method
-
-//delete order details
-const deleteOrder=async(req,res,next)=>{
-    const id=req.params.id;
-
+// Delete order details
+const deleteOrder = async (req, res, next) => {
+    const id = req.params.id;
     let order;
-
-    try{
-        order=await Order.findByIdAndDelete(id)
-    }catch(err){
+    try {
+        order = await Order.findByIdAndDelete(id);
+    } catch (err) {
         console.log(err);
     }
-    if(!order){
-        return res.status(404).json({message:"unable to update order details"});
+    if (!order) {
+        return res.status(404).json({ message: "Unable to delete order" });
     }
-    return res.status(200).json({order});
-}
-//http://localhost:5000/orders/delete/id=>test this using delete method
+    return res.status(200).json({ order });
+};
 
+// Update order status
+const updateStatus = async (req, res, next) => {
+    const { _id, status } = req.body;
+    let order;
+    try {
+        order = await Order.findByIdAndUpdate(_id, { status }, { new: true });
+    } catch (err) {
+        console.log(err);
+    }
+    if (!order) {
+        return res.status(404).json({ message: "Unable to update order status" });
+    }
+    return res.status(200).json({ order });
+};
 
-  
-
-//exporting all functions
-exports.getAllOrders=getAllOrders;
-exports.addOrders=addOrders;
-exports.getById=getById;
-exports.updateOrder=updateOrder;
-exports.deleteOrder=deleteOrder;
+// Exporting all functions
+exports.getAllOrders = getAllOrders;
+exports.addOrders = addOrders;
+exports.getById = getById;
+exports.updateOrder = updateOrder;
+exports.deleteOrder = deleteOrder;
+exports.updateStatus = updateStatus;
