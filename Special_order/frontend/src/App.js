@@ -9,6 +9,7 @@ import Updateorder from './components/Specialorder/Updateorder/Updateorder';
 import AddPayment from './components/Specialorder/PaymentProcess/AddPayment';
 import PaymentSuccess from './components/Specialorder/PaymentProcess/Paymentsuccessful';
 import SpecialOrderDis from './components/Admin/Specialorder/Orderdetail/SpecialOrderdis';
+import DriverNot from './components/Driver/Notifications/Notifications';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/specialpayment" element={<AddPayment/>}/>
           <Route path="/specialpaymentsuc" element={<PaymentSuccess/>}/>
           <Route path="/specialorderdisadmin" element={<SpecialOrderDis/>}/>
+          <Route path="/drivernot" element={<DriverNot/>}/>
         </Routes>
       </React.Fragment>
     </div>

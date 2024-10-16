@@ -22,6 +22,7 @@ function Addorder() {
     preferedtime:"",
     totalweight:"",
     totalamount:"",
+    // status:"Pending "
   });
   //implementing a function what should happen when make inputs and submit
   const handleChange = (e) => {
@@ -127,7 +128,7 @@ function Addorder() {
   </div>
   <div class="mb-3">
     <label for="Inputpreferedtime" class="form-label">Prefered Time</label>
-    <input type="text" class="form-control" name="preferedtime" onChange={handleChange} value={inputs.preferedtime} required/>
+    <input type="time" class="form-control" name="preferedtime" onChange={handleChange} value={inputs.preferedtime} required/>
   </div>
   <div class="mb-3">
     <label for="Inputfortotalweight" class="form-label">Total Weight (kg)</label>

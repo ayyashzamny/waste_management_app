@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import './Specialorderdis.css';
@@ -8,25 +7,23 @@ import Nav from "../../../Specialorder/Nav/Nav";
 
 const URL = "http://localhost:5000/orders";
 
-const fetchHandler = async () => {
+const fetchOrders = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-function SpecialOrderDis() {
-  // Fetch data
+function SpecialOrderdis() {
   const [Orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
-    fetchHandler().then((data) => setOrders(data.Orders || []));
+    fetchOrders().then((data) => setOrders(data.Orders || []));
   }, []);
 
-  // Delete Function
   const history = useNavigate();
   const deleteHandler = async (_id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this Driver Details?"
+      "Are you sure you want to delete this order?"
     );
 
     if (confirmed) {
@@ -41,21 +38,28 @@ function SpecialOrderDis() {
     }
   };
 
-  // PDF Function
-  const ComponentsRef = useRef();
+  // Assign Driver Function
+  const assignDriverHandler = async (orderId) => {
+    try {
+      await axios.post(`${URL}/assign`, { orderId });
+      window.alert("Driver assigned successfully!");
+      fetchOrders().then((data) => setOrders(data.Orders || []));
+    } catch (error) {
+      console.error("Error assigning driver:", error);
+    }
+  };
+
+  const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "Details Report",
-    onAfterPrint: () => alert("Details Report Successfully Downloaded!"),
+    contentRef: componentRef,
+    documentTitle: "Order Report",
+    onAfterPrint: () => alert("Order Report Successfully Downloaded!"),
   });
 
-  // Search Function
   const handleSearch = () => {
-    fetchHandler().then((data) => {
-      const filtered = data.specialcol.filter((specialcol) =>
-        Object.values(specialcol).some((field) =>
-          field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-        )
+    fetchOrders().then((data) => {
+      const filtered = data.Orders.filter((order) =>
+        order.contactname.toString().toLowerCase().includes(searchQuery.toLowerCase())
       );
       setOrders(filtered);
       setNoResults(filtered.length === 0);
@@ -95,7 +99,7 @@ function SpecialOrderDis() {
           </button>
         </div>
 
-        <div className="tbl_con_admin" ref={ComponentsRef}>
+        <div className="tbl_con_admin" ref={componentRef}>
           <h1 className="topic_inventory">
             Special Collection
             <span className="sub_topic_inventory"> Details</span>{" "}
@@ -109,8 +113,10 @@ function SpecialOrderDis() {
                 <th className="admin_tbl_th">Address</th>
                 <th className="admin_tbl_th">List of Items</th>
                 <th className="admin_tbl_th">Preferred Date</th>
+                <th className="admin_tbl_th">Preferred Time</th>
                 <th className="admin_tbl_th">Total Weight</th>
                 <th className="admin_tbl_th">Total Amount</th>
+                <th className="admin_tbl_th">Actions</th>
               </tr>
             </thead>
             {noResults ? (
@@ -129,21 +135,22 @@ function SpecialOrderDis() {
                     <td className="admin_tbl_td">{item.contactemail}</td>
                     <td className="admin_tbl_td">{item.address}</td>
                     <td className="admin_tbl_td">{item.listofitems}</td>
+                    <td className="admin_tbl_td">{item.prefereddate}</td>
                     <td className="admin_tbl_td">{item.preferedtime}</td>
                     <td className="admin_tbl_td">{item.totalweight}</td>
                     <td className="admin_tbl_td">{item.totalamount}</td>
                     <td className="admin_tbl_td">
-                      <Link
-                        to={`/updateedriver/${item._id}`}
+                      <button
+                        onClick={() => assignDriverHandler(item._id)}
                         className="btn_dash_admin"
                       >
-                        Update
-                      </Link>
+                        Assign Driver
+                      </button>
                       <button
                         onClick={() => deleteHandler(item._id)}
                         className="btn_dash_admin_dlt"
                       >
-                        Delete
+                        Deny
                       </button>
                     </td>
                   </tr>
@@ -157,4 +164,4 @@ function SpecialOrderDis() {
   );
 }
 
-export default SpecialOrderDis;
+export default SpecialOrderdis;

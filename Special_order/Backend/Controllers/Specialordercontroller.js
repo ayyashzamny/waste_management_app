@@ -1,11 +1,11 @@
 const Order=require('../Models/Specialordermodel');
 
-//displaying all notes
+//displaying all order
 const getAllOrders=async(req,res,next)=>
     {
         let Orders
     
-        //get all notes
+        //get all orders
         try{
             Orders=await Order.find();//finding every note and displaying
         }catch(err){
@@ -17,12 +17,12 @@ const getAllOrders=async(req,res,next)=>
             return res.Status(404).json({message:"orders not found"});
         }
     
-        //display all notes
+        //display all orders
         return res.status(200).json({Orders});
     };
     //http://localhost:5000/orders=>testing above get method using this url in the postman
     
-//inserting notes
+//inserting orders
 const addOrders=async(req,res,next)=>{
     const{contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
 
@@ -35,7 +35,7 @@ const addOrders=async(req,res,next)=>{
         console.log(err);
     }
 
-    //not insert notes
+    //not insert orders
     if(!orders){
         return res.status(404).json({message:"unable to add orders"});
     }
@@ -55,7 +55,7 @@ const getById=async(req,res,next)=>{
     }catch(err){
         console.log(err);
     }
-    //not available users
+    //not available orders
     if(!order){
         return res.status(404).json({message:"Order not found"});
     }
@@ -64,7 +64,7 @@ const getById=async(req,res,next)=>{
 }
 //http://localhost:5000/orders/id=>testing above get method using this url in the postman
 
-//update note details
+//update order details
 const updateOrder=async(req,res,next)=>{
     const id=req.params.id;
     const {contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
@@ -78,7 +78,7 @@ const updateOrder=async(req,res,next)=>{
         console.log(err);
     }
 
-    //not available users
+    //not available orders
     if(!orders){
         return res.status(404).json({message:"unable to update order details"});
     }
@@ -87,7 +87,7 @@ const updateOrder=async(req,res,next)=>{
 }
 //http://localhost:5000/orders/update/id=>test this using put method
 
-//delete user details
+//delete order details
 const deleteOrder=async(req,res,next)=>{
     const id=req.params.id;
 
@@ -104,6 +104,9 @@ const deleteOrder=async(req,res,next)=>{
     return res.status(200).json({order});
 }
 //http://localhost:5000/orders/delete/id=>test this using delete method
+
+
+  
 
 //exporting all functions
 exports.getAllOrders=getAllOrders;
