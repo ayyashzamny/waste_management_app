@@ -6,6 +6,9 @@ import Home from './components/Specialorder/Home/Home';
 import Addorder from './components/Specialorder/Addorder/Addorder';
 import Orderdetails from './components/Specialorder/Orderdetails/Orders';
 import Updateorder from './components/Specialorder/Updateorder/Updateorder';
+import AddPayment from './components/Specialorder/PaymentProcess/AddPayment';
+import PaymentSuccess from './components/Specialorder/PaymentProcess/Paymentsuccessful';
+import SpecialOrderDis from './components/Admin/Specialorder/Orderdetail/SpecialOrderdis';
 import './App.css';
 
 function App() {
@@ -14,9 +17,12 @@ function App() {
       <React.Fragment>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/addorder" element={<Addorder/>}/>
-          <Route path="/orderdetails" element={<Orderdetails/>} />
-          <Route path="/orderdetails/:id" element={<Updateorder/>}/>
+          <Route path="/addspecialorder" element={<Addorder/>}/>
+          <Route path="/specialorderdetails" element={<Orderdetails/>} />
+          <Route path="/specialorderdetails/:id" element={<Updateorder/>}/>
+          <Route path="/specialpayment" element={<AddPayment/>}/>
+          <Route path="/specialpaymentsuc" element={<PaymentSuccess/>}/>
+          <Route path="/specialorderdisadmin" element={<SpecialOrderDis/>}/>
         </Routes>
       </React.Fragment>
     </div>

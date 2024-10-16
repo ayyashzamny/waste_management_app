@@ -24,12 +24,12 @@ const getAllOrders=async(req,res,next)=>
     
 //inserting notes
 const addOrders=async(req,res,next)=>{
-    const{contactname,contactnumber,contactemail,address,listofitems,prefereddate,preferedtime}=req.body;
+    const{contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
 
     let orders;
    
     try{
-        orders=new Order({contactname,contactnumber,contactemail,address,listofitems,prefereddate,preferedtime});
+        orders=new Order({contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount});
         await orders.save();//save the inserted details in the database
     }catch(err){
         console.log(err);
@@ -67,12 +67,12 @@ const getById=async(req,res,next)=>{
 //update note details
 const updateOrder=async(req,res,next)=>{
     const id=req.params.id;
-    const {contactname,contactnumber,contactemail,address,listofitems,prefereddate,preferedtime}=req.body;
+    const {contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=req.body;
 
     let orders;
 
     try{
-        orders=await Order.findByIdAndUpdate(id,{contactname:contactname,contactnumber:contactnumber,contactemail:contactemail,address:address,listofitems:listofitems,prefereddate:prefereddate,preferedtime:preferedtime});//finding the particular Order and updating
+        orders=await Order.findByIdAndUpdate(id,{contactname:contactname,typeofuser:typeofuser,contactemail:contactemail,address:address,listofitems:listofitems,prefereddate:prefereddate,preferedtime:preferedtime,totalweight:totalweight,totalamount:totalamount});//finding the particular Order and updating
         orders=await orders.save();//save the particular updated details
     }catch(err){
         console.log(err);

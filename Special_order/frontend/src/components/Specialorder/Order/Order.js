@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import './Order.css';
 
 function Order(props) {
-    const{_id,contactname,contactnumber,contactemail,address,listofitems,prefereddate,preferedtime}=props.order;
+    const{_id,contactname,typeofuser,contactemail,address,listofitems,prefereddate,preferedtime,totalweight,totalamount}=props.order;
 
     //implementing the delete function below delete handler
     const history=useNavigate();
@@ -56,16 +56,18 @@ function Order(props) {
     <div style={{display:'flex'}} className='details'>
     <h5>{prefereddate}</h5>
     <h5>{contactname}</h5>
-      <h5>{contactnumber}</h5>
+      <h5>{typeofuser}</h5>
       <h5>{contactemail}</h5>
       <h5>{address}</h5>
       <h5>{listofitems}</h5>
       
       <h5>{preferedtime}</h5>
+      <h5>{totalweight}</h5>
+      <h5>{totalamount}</h5>
       <button
           className="btn btn-success no-print"
           // id='editbtn'
-          onClick={() => (window.location.href = `/orderdetails/${_id}`)}
+          onClick={() => (window.location.href = `/specialorderdetails/${_id}`)}
         >
           Edit
           </button>
